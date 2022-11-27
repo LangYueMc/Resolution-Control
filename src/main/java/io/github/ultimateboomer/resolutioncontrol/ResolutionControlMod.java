@@ -15,7 +15,7 @@ import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.client.util.ScreenshotRecorder;
 import net.minecraft.client.util.Window;
-import net.minecraft.text.TranslatableText;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -102,8 +102,7 @@ public class ResolutionControlMod implements ModInitializer {
 			while (screenshotKey.wasPressed()) {
 				if (getOverrideScreenshotScale()) {
 					this.screenshot = true;
-					client.player.sendMessage(
-							new TranslatableText("resolutioncontrol.screenshot.wait"), false);
+					client.player.sendMessage(Text.translatable("resolutioncontrol.screenshot.wait"), false);
 				} else {
 					saveScreenshot(framebuffer);
 				}

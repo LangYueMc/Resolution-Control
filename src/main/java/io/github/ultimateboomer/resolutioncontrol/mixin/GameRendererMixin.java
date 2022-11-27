@@ -1,6 +1,7 @@
 package io.github.ultimateboomer.resolutioncontrol.mixin;
 
 import net.minecraft.client.render.GameRenderer;
+import net.minecraft.client.util.math.MatrixStack;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -13,11 +14,16 @@ public abstract class GameRendererMixin {
 	private void onRenderWorldBegin(CallbackInfo callbackInfo) {
 		ResolutionControlMod.getInstance().setShouldScale(true);
 	}
-	
-	@Inject(at = @At("RETURN"), method = "renderWorld")
-	private void onRenderWorldEnd(CallbackInfo callbackInfo) {
+
+	@Inject(method = "renderWorld", at = @At(value = "INVOKE", target = "Lnet/minecraft/util/profiler/Profiler;swap(Ljava/lang/String;)V", ordinal = 1))
+	private void onRenderEnd(float tickDelta, long limitTime, MatrixStack matrices, CallbackInfo callbackInfo) {
 		ResolutionControlMod.getInstance().setShouldScale(false);
 	}
+
+//	@Inject(at = @At("RETURN"), method = "renderWorld")
+//	private void onRenderWorldEnd(CallbackInfo callbackInfo) {
+//		ResolutionControlMod.getInstance().setShouldScale(false);
+//	}
 
 
 }
